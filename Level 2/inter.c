@@ -1,49 +1,34 @@
 #include <unistd.h>
 
-int first_char(char *string, char c)
+void check_letter(char *s1, char *s2)
 {
-	int i;
+	int	i;
+	int	tab[256] = {0};
 
 	i = 0;
-	while(string[i])
+	while(s2[i])
 	{
-		if(string[i] == c)
-			return(i);
+		tab[(int)s2[i]] = 1;
 		i++;
-	
 	}
-	return(i);
+	i = 0;
+	while(s1[i])
+	{
+		if(tab[(int)s1[i]] == 1)
+		{
+			write(1, &s1[i], 1);
+			tab[(int)s1[i]] = 2;
+		}
+		i++;
+	}
+
 }
 
 int main(int argc, char **argv)
 {
-	int i;
-	int	j;
-	int check;
-	
-	check = 0;
-	j = 0;
-	i = 0;
 	if(argc == 3)
 	{
-		while(argv[1][i])
-		{
-			if(i == first_char(argv[1], argv[1][i]))
-			{
-				check = 0;
-				j = 0;
-				while(argv[2][j])
-				{
-					if(argv[1][i] == argv[2][j] && check == 0)
-					{
-						write(1, &argv[1][i], 1);
-						check = 1;
-					}
-					j++;
-				}	
-			}	
-			i++;
-		}
+		check_letter(argv[1], argv[2]);
 	}
-		write(1, "\n", 1);
+	write(1, "\n", 1);
 }
