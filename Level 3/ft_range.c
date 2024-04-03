@@ -1,18 +1,42 @@
-#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-int max(int *tab, unsigned int len)
+int *ft_range(int start, int end)
 {
-	unsigned int result;
-	int	i = 0;
-
-	result = tab[i];
-	if(len == 0)
-		return(0);
-	while(i < len)
+	int i = 0;
+	int len = abs((end - start)) + 1;
+	int *res = (int *)malloc(sizeof(int) * len);
+	
+	while (i < len)
 	{
-		if(result < tab[i])
-			result = tab[i];
-		i++;
+		if (start < end)
+		{
+			res[i] = start;
+			start++;
+			i++;
+		}
+		else
+		{
+			res[i] = start;
+			start--;
+			i++;
+		}
 	}
-	return (result);
+        return (res);
+}
+
+int main() {
+    int start = 10;
+    int end = 5;
+
+    int *result = ft_range(start, end);
+
+    int i = 0;
+    while (i < abs(end - start) + 1) {
+        printf("%d ", result[i]);
+        i++;
+    }
+    printf("\n");
+
+    free(result); // No olvides liberar la memoria asignada
 }
